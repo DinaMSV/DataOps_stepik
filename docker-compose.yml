@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  log-reader:
+    build: ./app1_log_reader
+    volumes:
+      - /var/log:var/log:ro
+      - shared_volume:/shared
+    restart: unless-stopped
+
+  web-viewer:
+    build: ./app2_web_viewer
+    ports:
+      - "5000:5000"
+    volumes:
+      - shared_volume:/shared
+    restart: unless-stopped
+
+volumes:
+  shared_volume:
